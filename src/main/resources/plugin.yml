@@ -1,0 +1,6 @@
+main: pw.alphabeta.authyou.client.AuthYouPlugin
+name: AuthYou
+version: 2.0.0
+description: Authenticate user
+api-version: 1.12.2
+authors: [ksi123456ab]
