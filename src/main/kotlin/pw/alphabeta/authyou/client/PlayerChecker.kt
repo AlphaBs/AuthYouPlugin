@@ -1,11 +1,10 @@
 package pw.alphabeta.authyou.client
 
 import com.google.gson.Gson
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+
 
 class PlayerChecker(
     private val host: String,
@@ -15,6 +14,8 @@ class PlayerChecker(
         const val ProtocolVersion: String = "a1"
     }
 
+    var timeout: Int = 10000
+    
     fun checkPlayer(ip: String, uuid: String): PlayerCheckResult {
         val url = "$host/auth/$serverId/check?ver=$ProtocolVersion"
         val body = Gson().toJson(
@@ -33,22 +34,42 @@ class PlayerChecker(
         val url = URL(urlStr)
         with (url.openConnection() as HttpURLConnection) {
             requestMethod = "POST"
-
+            doOutput = true
+            readTimeout = timeout
+            connectTimeout = timeout
+            setRequestProperty("Content-Type", "application/json")
+            
             val wr = OutputStreamWriter(outputStream)
             wr.write(body)
             wr.flush()
 
-            BufferedReader(InputStreamReader(inputStream)).use {
-                val response = StringBuffer()
-
-                var inputLine = it.readLine()
-                while (inputLine != null) {
-                    response.append(inputLine)
-                    inputLine = it.readLine()
+            var responseString: String?
+            try {
+                responseString = readInputStream(inputStream)
+            } catch (e: IOException) {
+                // This means that an error occurred, read the error from the ErrorStream
+                try {
+                    responseString = readInputStream(errorStream)
+                } catch (e1: IOException) {
+                    throw IllegalStateException("Unable to read error body.", e)
                 }
-
-                return response.toString()
             }
+            
+            return responseString ?: ""
+        }
+    }
+    
+    private fun readInputStream(inputStream: InputStream): String {
+        BufferedReader(InputStreamReader(inputStream)).use {
+            val response = StringBuffer()
+
+            var inputLine = it.readLine()
+            while (inputLine != null) {
+                response.append(inputLine)
+                inputLine = it.readLine()
+            }
+
+            return response.toString()
         }
     }
 }
