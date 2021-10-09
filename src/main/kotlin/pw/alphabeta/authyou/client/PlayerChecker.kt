@@ -1,22 +1,22 @@
 package pw.alphabeta.authyou.client
 
 import com.google.gson.Gson
-import org.bukkit.entity.Player
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
-class PlayerChecker {
-    constructor(host: String) {
-        this.host = host
+class PlayerChecker(
+    private val host: String,
+    private val serverId: String) {
+
+    companion object {
+        const val ProtocolVersion: String = "a1"
     }
 
-    private val host: String
-
     fun checkPlayer(ip: String, uuid: String): PlayerCheckResult {
-        val url = "$host/checkuser?id=a1"
+        val url = "$host/auth/$serverId/check?ver=$ProtocolVersion"
         val body = Gson().toJson(
             AuthYouPlayerData(
                 ip = ip,
@@ -29,8 +29,8 @@ class PlayerChecker {
     }
 
     // http post request
-    private fun post(url: String, body: String): String {
-        val url = URL(url)
+    private fun post(urlStr: String, body: String): String {
+        val url = URL(urlStr)
         with (url.openConnection() as HttpURLConnection) {
             requestMethod = "POST"
 

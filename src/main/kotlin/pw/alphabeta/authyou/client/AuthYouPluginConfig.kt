@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration
 
 data class AuthYouPluginConfig(
     val host: String,
+    val serverId: String,
     val allowLocalIp: Boolean,
     val passOnError: Boolean,
     val useDetailKickMessage: Boolean,
@@ -29,6 +30,7 @@ data class AuthYouPluginConfig(
 
             return AuthYouPluginConfig(
                 host = config.getString("host"),
+                serverId = config.getString("serverId"),
                 allowLocalIp = config.getBoolean("allowLocalIp"),
                 passOnError = config.getBoolean("passOnError"),
                 useDetailKickMessage = config.getBoolean("useDetailKickMessage"),

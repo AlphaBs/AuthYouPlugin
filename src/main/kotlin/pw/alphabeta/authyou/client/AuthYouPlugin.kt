@@ -19,11 +19,10 @@ class AuthYouPlugin : JavaPlugin(), Listener {
         config = AuthYouPluginConfig.load(getConfig())
         saveConfig()
 
-        val host = getConfig().getString("host")
-        logger.info("AuthYou Server: $host")
+        logger.info("AuthYou Server: ${config?.host}, ${config?.serverId}")
 
         scheduler = Bukkit.getScheduler()
-        playerChecker = PlayerChecker(host)
+        playerChecker = PlayerChecker(config!!.host, config!!.serverId)
 
         server.pluginManager.registerEvents(this, this)
 
@@ -78,7 +77,7 @@ class AuthYouPlugin : JavaPlugin(), Listener {
                 val checkResult = playerChecker!!.checkPlayer(ip, uuid)
                 if (!checkResult.result) {
                     isSuccess = false
-                    detailedKickMessage = checkResult.msg
+                    detailedKickMessage = checkResult.msg ?: "(no msg)"
                 }
             } catch (e: Exception) {
                 logger.warning("Failed to check player: $name")
