@@ -15,19 +15,25 @@ class AuthYouPlugin : JavaPlugin(), Listener {
     private var playerChecker: PlayerChecker? = null
     private var config: AuthYouPluginConfig? = null
 
-    override fun onLoad() {
-        config = AuthYouPluginConfig.load(getConfig())
+    override fun onEnable() {
+        val config = AuthYouPluginConfig.load(getConfig())
+        this.config = config
         saveConfig()
 
-        logger.info("AuthYou Server: ${config?.host}, ${config?.serverId}")
+        if (config.host.isBlank() || config.serverId.isBlank()) {
+            throw NullPointerException("config.host / config.serverId was null.")
+        }
+
+        val playerChecker = PlayerChecker(config.host, config.serverId)
+        playerChecker.timeout = config.requestTimeout
+        this.playerChecker = playerChecker
+
+        super.onEnable()
 
         scheduler = Bukkit.getScheduler()
-        playerChecker = PlayerChecker(config!!.host, config!!.serverId)
-
         server.pluginManager.registerEvents(this, this)
 
-        super.onLoad()
-        logger.info("AuthYou Loaded")
+        logger.info("AuthYou Enabled: ${config.host}, ${config.serverId}")
     }
 
     override fun onDisable() {
@@ -64,7 +70,7 @@ class AuthYouPlugin : JavaPlugin(), Listener {
         if (scheduler == null || playerChecker == null || config == null )
             throw IllegalStateException()
 
-        val ip = player.address.toString()
+        val ip = player.address.hostName
         val uuid = player.uniqueId.toString()
         val name = player.name
 
@@ -78,9 +84,10 @@ class AuthYouPlugin : JavaPlugin(), Listener {
                 if (!checkResult.result) {
                     isSuccess = false
                     detailedKickMessage = checkResult.msg ?: "(no msg)"
+                    logger.info("Unauthorized player: $name, $detailedKickMessage")
                 }
             } catch (e: Exception) {
-                logger.warning("Failed to check player: $name")
+                logger.warning("Exception on request: $name")
                 logger.warning(e.toString())
 
                 if (!config!!.passOnError) {
