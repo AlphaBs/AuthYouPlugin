@@ -1,6 +1,5 @@
 package pw.alphabeta.authyou.client
 
-import pw.alphabeta.authyou.client.AuthYouPluginConfigLoader.Companion.load
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
 import org.bukkit.Bukkit
@@ -16,25 +15,9 @@ class AuthYouPlugin : JavaPlugin(), Listener {
     private var playerChecker: PlayerChecker? = null
     private var config: AuthYouPluginConfig? = null
 
-    // config 파일 불러오기
-    private fun loadConfig() {
-        // host: 서버주소
-        // passOnError: true/false 오류 발생시 접속 허용할지 여부
-        // useDetailKickMessage: true/false 자세한 오류 메세지를 유저에게 알려줄지 여부
-        // checkDelayTick: 100 접속 후 유저 확인까지 딜레이
-        // kickMessage: 킥 메세지
-
-        getConfig().addDefault("passOnError", false)
-        getConfig().addDefault("useDetailKickMessage", false)
-        getConfig().addDefault("checkDelayTick", 100)
-        getConfig().addDefault("kickMessage", "[AuthYou] Unauthorized Player. Restart your client")
-        getConfig().options().copyDefaults(true)
-        saveConfig()
-        config = load(getConfig())
-    }
-
     override fun onLoad() {
-        loadConfig()
+        config = AuthYouPluginConfig.load(getConfig())
+        saveConfig()
 
         val host = getConfig().getString("host")
         logger.info("AuthYou Server: $host")
