@@ -42,10 +42,23 @@ class AuthYouPlugin : JavaPlugin(), Listener {
     fun onPlayerJoin(e: PlayerJoinEvent) {
         val player = e.player
 
-        // check player
-        // 관리자인 경우 아래 메서드 호출 없이 메서드 종료
-
+        // allow loopback ip and private network ip (like 192.168.x.x)
+        if (config!!.allowLocalIp && checkLocalPlayer(player)) {
+            logger.info("Allow local user: " + player.name)
+            return
+        }
+        
+        // 관리자인 경우
+        // if (관리자)
+        //     return
+        
+        // 일반 유저
         checkAuthYouPlayer(player)
+    }
+    
+    private fun checkLocalPlayer(player: Player): Boolean {
+        val address = player.address.address
+        return address.isLoopbackAddress || address.isSiteLocalAddress
     }
 
     private fun checkAuthYouPlayer(player: Player) {
