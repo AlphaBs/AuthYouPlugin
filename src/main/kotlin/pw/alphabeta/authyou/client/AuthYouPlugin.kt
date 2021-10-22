@@ -52,10 +52,10 @@ class AuthYouPlugin : JavaPlugin(), Listener {
             logger.info("Allow local user: " + player.name)
             return
         }
-        
+
         // 관리자인 경우
-        // if (관리자)
-        //     return
+         if (config!!.allowUser.contains(player.uniqueId.toString()))
+             return
         
         // 일반 유저
         checkAuthYouPlayer(player)

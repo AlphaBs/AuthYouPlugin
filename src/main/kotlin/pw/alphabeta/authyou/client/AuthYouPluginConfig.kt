@@ -10,7 +10,8 @@ data class AuthYouPluginConfig(
     val passOnError: Boolean,
     val useDetailKickMessage: Boolean,
     val checkDelayTick: Long,
-    val kickMessage: String
+    val kickMessage: String,
+    val allowUser: ArrayList<String>
 ) {
     companion object {
         fun load(config: FileConfiguration): AuthYouPluginConfig{
@@ -32,6 +33,7 @@ data class AuthYouPluginConfig(
             config.addDefault("useDetailKickMessage", false)
             config.addDefault("checkDelayTick", 100)
             config.addDefault("kickMessage", "[AuthYou] Unauthorized Player. Restart your client")
+            config.addDefault("allowUser", ArrayList<String>())
             config.options().copyDefaults(true)
 
             return AuthYouPluginConfig(
@@ -42,7 +44,8 @@ data class AuthYouPluginConfig(
                 passOnError = config.getBoolean("passOnError"),
                 useDetailKickMessage = config.getBoolean("useDetailKickMessage"),
                 checkDelayTick = config.getLong("checkDelayTick"),
-                kickMessage = config.getString("kickMessage")
+                kickMessage = config.getString("kickMessage"),
+                allowUser = config.getStringList("allowUser") as ArrayList<String>
             )
         }
     }
