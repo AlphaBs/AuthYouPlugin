@@ -11,7 +11,7 @@ data class AuthYouPluginConfig(
     val useDetailKickMessage: Boolean,
     val checkDelayTick: Long,
     val kickMessage: String,
-    val allowUser: ArrayList<String>
+    val allowUser: HashSet<String>
 ) {
     companion object {
         fun load(config: FileConfiguration): AuthYouPluginConfig{
@@ -45,7 +45,7 @@ data class AuthYouPluginConfig(
                 useDetailKickMessage = config.getBoolean("useDetailKickMessage"),
                 checkDelayTick = config.getLong("checkDelayTick"),
                 kickMessage = config.getString("kickMessage"),
-                allowUser = config.getStringList("allowUser") as ArrayList<String>
+                allowUser = config.getStringList("allowUser").toHashSet()
             )
         }
     }
