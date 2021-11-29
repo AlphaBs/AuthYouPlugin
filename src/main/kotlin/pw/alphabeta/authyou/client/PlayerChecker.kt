@@ -17,7 +17,7 @@ class PlayerChecker(
     var timeout: Int = 10000
     
     fun checkPlayer(ip: String, uuid: String): PlayerCheckResult {
-        val url = "$host/auth/$serverId/check?ver=$ProtocolVersion"
+        val url = "$host/$serverId/auth/check?ver=$ProtocolVersion"
         val body = Gson().toJson(
             AuthYouPlayerData(
                 ip = ip,
