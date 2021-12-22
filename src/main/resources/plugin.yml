@@ -4,3 +4,7 @@ version: 2.0.0
 description: Authenticate user
 api-version: 1.12.2
 authors: [ksi123456ab]
+commands:
+  authyou:
+    description: manage AuthYou plugin
+    usage: /authyou add <username> or /authyou remove <username>

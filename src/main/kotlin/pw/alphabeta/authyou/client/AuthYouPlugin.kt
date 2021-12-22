@@ -3,6 +3,11 @@ package pw.alphabeta.authyou.client
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
 import org.bukkit.Bukkit
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.configuration.Configuration
+import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -10,13 +15,13 @@ import org.bukkit.event.Listener
 import java.lang.Exception
 import java.lang.IllegalStateException
 
-class AuthYouPlugin : JavaPlugin(), Listener {
+class AuthYouPlugin : JavaPlugin(), Listener, CommandExecutor {
     private var scheduler: BukkitScheduler? = null
     private var playerChecker: PlayerChecker? = null
     private var config: AuthYouPluginConfig? = null
 
     override fun onEnable() {
-        val config = AuthYouPluginConfig.load(getConfig())
+        val config = AuthYouPluginConfig.load(this)
         this.config = config
         saveConfig()
 
@@ -32,13 +37,37 @@ class AuthYouPlugin : JavaPlugin(), Listener {
 
         scheduler = Bukkit.getScheduler()
         server.pluginManager.registerEvents(this, this)
+        getCommand("authyou").executor = this
 
         logger.info("AuthYou Enabled: ${config.host}, ${config.serverId}")
     }
 
+    override fun onCommand(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
+    ): Boolean {
+        if(args.size != 2) return false
+        val str = args[0]
+        if(!sender.isOp) return false
+        val p = Bukkit.getOfflinePlayer(args[1]) ?: return false
+        val uuid = p.uniqueId.toString()
+        if(str == "add") {
+            if(config!!.allowUser.contains(uuid)) return false
+            config!!.allowUser.add(uuid)
+            config!!.save(this)
+            sender.sendMessage("allowUser add!")
+        } else if(str == "remove") {
+            if(!config!!.allowUser.contains(uuid)) return false
+            config!!.allowUser.remove(uuid)
+            config!!.save(this)
+            sender.sendMessage("allowUser remove!")
+        }
+        return true
+    }
+
     override fun onDisable() {
-        getConfig().options().copyDefaults(true)
-        saveConfig()
         super.onDisable()
         logger.info("AuthYou Disabled")
     }
@@ -47,15 +76,17 @@ class AuthYouPlugin : JavaPlugin(), Listener {
     fun onPlayerJoin(e: PlayerJoinEvent) {
         val player = e.player
 
-        // allow loopback ip and private network ip (like 192.168.x.x)
-        if (config!!.allowLocalIp && checkLocalPlayer(player)) {
-            logger.info("Allow local user: " + player.name)
-            return
-        }
+        if (config != null) {
+            // allow loopback ip and private network ip (like 192.168.x.x)
+            if (config!!.allowLocalIp && checkLocalPlayer(player)) {
+                logger.info("Allow local user: " + player.name)
+                return
+            }
 
-        // 관리자인 경우
-         if (config!!.allowUser.contains(player.uniqueId.toString()))
-             return
+            // 관리자인 경우
+            if (config!!.allowUser.contains(player.uniqueId.toString()))
+                return
+        }
         
         // 일반 유저
         checkAuthYouPlayer(player)
