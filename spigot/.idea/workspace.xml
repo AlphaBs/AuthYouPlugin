@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4671a47f-39c4-4cdf-a932-a494a9e09846" name="Changes" comment="intellij project">
+    <list default="true" id="4671a47f-39c4-4cdf-a932-a494a9e09846" name="Changes" comment="add AuthYouCommand.kt and add commands">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/SpigotPlugin.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/Util.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/plugin/IBukkitPlugin.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPlayerData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPlayerData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPlugin.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPluginConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/AuthYouPluginConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/PlayerCheckResult.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/pw/alphabeta/authyou/client/PlayerCheckResult.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +64,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -89,7 +91,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AuthYouBungee" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -105,6 +107,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="pw.alphabeta.authyou" />
+      <recent name="pw.alphabeta.authyou.plugin" />
       <recent name="pw.alphabeta.authyou.client" />
     </key>
   </component>
@@ -203,7 +207,9 @@
       <workItem from="1638167454726" duration="3525000" />
       <workItem from="1638177623499" duration="1218000" />
       <workItem from="1640064728934" duration="1357000" />
-      <workItem from="1640089883657" duration="5105000" />
+      <workItem from="1640089883657" duration="5285000" />
+      <workItem from="1641450683401" duration="5230000" />
+      <workItem from="1641889220922" duration="919000" />
     </task>
     <task id="LOCAL-00001" summary="move config codes">
       <created>1633764248053</created>
@@ -268,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634898178228</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add /authyou command and change config file format">
+      <created>1640137636796</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1640137636796</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,6 +308,8 @@
     <MESSAGE value="config 에서 관리자 화이트리스트 설정" />
     <MESSAGE value="allowUser 를 HashSet 으로 저장, 성능 향상" />
     <MESSAGE value="intellij project" />
-    <option name="LAST_COMMIT_MESSAGE" value="intellij project" />
+    <MESSAGE value="add /authyou command and change config file format" />
+    <MESSAGE value="add AuthYouCommand.kt and add commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="add AuthYouCommand.kt and add commands" />
   </component>
 </project>
