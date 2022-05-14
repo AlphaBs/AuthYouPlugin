@@ -11,5 +11,4 @@ interface IBukkitPlugin {
 
     fun onCommand()
     fun onPlayerJoin()
-    fun
 }

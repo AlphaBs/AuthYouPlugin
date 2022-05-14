@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender
 import pw.alphabeta.authyou.plugin.IBukkitPlugin
 import java.util.*
 
-class AuthYouCommand(val plugin: IBukkitPlugin) {
-    fun onCommand(sender: CommandSender, command: Command?, label: String, args: Array<String>): Boolean {
+class AuthYouCommand(val plugin: AuthYouPlugin) : CommandExecutor {
+    override fun onCommand(sender: CommandSender, command: Command?, label: String, args: Array<String>): Boolean {
         if (!sender.hasPermission("authyou.command")) {
             sender.sendMessage("You don't have a permission to use this command")
             return false

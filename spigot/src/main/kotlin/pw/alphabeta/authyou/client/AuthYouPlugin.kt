@@ -106,7 +106,7 @@ class AuthYouPlugin : JavaPlugin(), Listener {
                     msg += "\n" + detailedKickMessage
 
                 val finalMsg = msg
-                scheduler!!.runTask(this) { player.kickPlayer(finalMsg) }
+                scheduler.runTask(this) { player.kickPlayer(finalMsg) }
             }
         }, config!!.checkDelayTick)
     }
