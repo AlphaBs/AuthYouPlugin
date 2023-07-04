@@ -1,4 +1,4 @@
-package pw.alphabeta.authyouvelocty
+package pw.alphabeta.authyouvelocity
 
 data class AuthYouPlayerData(
     val ip: String,

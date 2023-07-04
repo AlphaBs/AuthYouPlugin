@@ -1,6 +1,7 @@
 package pw.alphabeta.authyouvelocity
 
 import com.google.gson.Gson
+import pw.alphabeta.authyouvelocity.PlayerCheckResult
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
