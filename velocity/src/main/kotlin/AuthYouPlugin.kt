@@ -13,12 +13,14 @@ import org.slf4j.Logger
     description = "AuthYou plugin for Velocity",
     authors = ["AlphaBs"]
 )
-class VelocityTest @Inject constructor(private val server: ProxyServer, logger: Logger) {
-    private val logger: Logger
-
+class AuthYouPlugin @Inject constructor(private val server: ProxyServer, logger: Logger) {
     init {
-        this.logger = logger
         logger.info("Hello there! I made my first plugin with Velocity.")
+    }
+
+    @Subscribe
+    fun onProxyInitialization(event: ProxyInitializeEvent) {
+
     }
 }
 
