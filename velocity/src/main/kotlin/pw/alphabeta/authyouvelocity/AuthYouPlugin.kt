@@ -14,12 +14,10 @@ import com.velocitypowered.api.proxy.ProxyServer
 import net.kyori.adventure.text.Component
 import org.slf4j.Logger
 import java.nio.file.Path
-import java.util.Optional
-import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 
 @Plugin(
-    id = "AuthYouPluginVelocity",
+    id = "authyoupluginvelocity",
     name = "AuthYouPluginVelocity",
     version = "0.1.0-SNAPSHOT",
     url = "https://github.com/AlphaBs/AuthYouPlugin",

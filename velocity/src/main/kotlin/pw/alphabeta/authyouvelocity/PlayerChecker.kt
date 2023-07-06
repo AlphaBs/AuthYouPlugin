@@ -55,7 +55,6 @@ class PlayerChecker(
                     throw IllegalStateException("Unable to read error body.", e)
                 }
             }
-            
             return responseString ?: ""
         }
     }
